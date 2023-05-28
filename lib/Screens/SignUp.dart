@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:flatmate/Screens/LoginScreen.dart';
+import 'package:flatmate/Screens/homeScreen.dart';
 import 'package:flatmate/widgets/textFieldInput.dart';
 import 'package:flutter/material.dart';
 import 'package:flatmate/utils/colors.dart';
 import 'package:flatmate/utils/imagepicker.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:instagram/resources/auth_methods.dart';
-// import 'package:instagram/screens/login_screen.dart';
-// import 'package:instagram/utils/utils.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -42,9 +42,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _image = im;
     });
   }
-
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailEditingController.text,
+        password: _passwordEditingController.text,
+      );
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>HomeScreen()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+      print('$e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    String _gender='Male';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -89,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextFieldInput(
                 textEditingController: _usernameEditingController,
                 textInputType: TextInputType.text,
-                hintText: 'Enter Your Username',
+                hintText: 'Enter Your Name',
               ),
               const SizedBox(
                 height: 24,
@@ -119,49 +135,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 24,
               ),
-              InkWell(
-                onTap:(){
-    // () async {
-                //   setState(() {
-                //     isLoading=true;
-                //   });
-                //   String res = await AuthMethods().signUpUser(
-                //     email: _emailEditingController.text,
-                //     password: _passwordEditingController.text,
-                //     username: _usernameEditingController.text,
-                //     bio: _bioEditingController.text,
-                //     file: _image!,
-                //   );
-                //   if (res == 'success') {
-                //     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                //     const ResponsiveLayout(
-                //       webScreenLayout: WebScreenLayout(),
-                //       phoneScreenLayout: PhoneScreenLayout(),),
-                //     ),
-                //     );
-                //   }
-                //   else{
-                //     showSnackBar(res, context);
-                //   }
-                //   setState(() {
-                //     isLoading=false;
-                //   });
+              DropdownButtonFormField<String>(
+                value: _gender,
+                items: const [
+                  DropdownMenuItem<String>(
+                    value: 'Male',
+                    child: Text('Male'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: 'Female',
+                    child: Text('Female'),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _gender = value!;
+                  });
                 },
-                child: Container(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              InkWell(
+                onTap:() async
+                  {
+                    setState(() {
+                      isLoading=true;
+                    });
+                    await createUserWithEmailAndPassword();
+                    setState(() {
+                      isLoading=false;
+                    });
+                  },
+                  child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  ),
+                  color: blueColor,
+                  ),
                   child: isLoading==true? const CircularProgressIndicator(
-                    color:primaryColor,
+                  color:primaryColor,
 
                   ):
                   const Text('Sign Up'),
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    color: blueColor,
-                  ),
                 ),
               ),
               const SizedBox(
@@ -195,4 +218,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
 }
