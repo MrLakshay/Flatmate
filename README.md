@@ -1,16 +1,35 @@
 # flatmate
 
-A new Flutter project.
+Searching a Flat and flatmate in cities like Bangalore can be a pain.
 
-## Getting Started
+The main aim of this project is to get you a good RoomMate and a buddy.
 
-This project is a starting point for a Flutter application.
+This app is developed in Flutter.
 
-A few resources to get you started if this is your first Flutter project:
+This app have multiple screen which include Search Screen(Including filter), Profile and Edit Profile Screen, Add a new Request Screen.
+Home screen and search result screen are yet to be implemented.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+I tried generating code using chatgpt which came in real handy.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I have used Firebase to Login and SignUp the new user.
+
+Other backend will be implemented using Firebase only.
+
+
+Here are some screen:
+
+Login and SignUp Screen:
+![Login]('https://github.com/MrLakshay/Flatmate/blob/fdfc7165ff6545e872712a3bdbcc50c6919c801e/Screens/WhatsApp%20Image%202023-05-29%20at%209.55.42%20PM%201.jpeg')
+
+![SignUp]('https://github.com/MrLakshay/Flatmate/blob/fdfc7165ff6545e872712a3bdbcc50c6919c801e/Screens/WhatsApp%20Image%202023-05-29%20at%209.55.42%20PM.jpeg')
+
+Edit Profile
+
+![Edit Profile]('https://github.com/MrLakshay/Flatmate/blob/fdfc7165ff6545e872712a3bdbcc50c6919c801e/Screens/WhatsApp%20Image%202023-05-29%20at%209.55.40%20PM.jpeg')
+
+Filter Screen
+
+![Filter]('https://github.com/MrLakshay/Flatmate/blob/fdfc7165ff6545e872712a3bdbcc50c6919c801e/Screens/WhatsApp%20Image%202023-05-29%20at%209.55.41%20PM.jpeg')
+
+![filter]('https://github.com/MrLakshay/Flatmate/blob/fdfc7165ff6545e872712a3bdbcc50c6919c801e/Screens/ezgif.com-video-to-gif.gif')
+
